@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ski-Verleih Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h2>Ski-Verleih</h2>
+        <ul class="nav-links">
+
+            <li><a href="#" onclick="switchView('view-dashboard')">Dashboard</a></li>
+
+            <li><a href="#" onclick="switchView('view-verwaltung')">Ski-Verwaltung</a></li>
+
+            <li><a href="#" onclick="switchView('view-personen')">Personen</a></li>
+
+            <li><a href="#" onclick="switchView('view-reservierungen')">Reservierungen</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        
+        <div id="view-dashboard" class="view active">
+            <h2>Dashboard</h2>
+            <hr class="divider">
+
+            <div class="stats-grid">
+
+                <div class="card available">
+                    <p>Verfügbare Items</p>
+                    <h3 id="stat-available">0</h3>
+                </div>
+
+                <div class="card rented">
+                    <p>Ausgeliehene Items</p>
+                    <h3 id="stat-rented">0</h3>
+                </div>
+
+                <div class="card total">
+                    <p>Gesamt Items</p>
+                    <h3 id="stat-total">0</h3>
+                </div>
+
+                <div class="card persons">
+                    <p>Registrierte Personen</p>
+                    <h3 id="stat-persons">0</h3>
+                </div>
+
+            </div>
+
+            <h3>Schnellzugriff</h3>
+            <div class="actions">
+                <button class="btn btn-blue" onclick="switchView('view-verwaltung')">Ski verwalten</button>
+                <button class="btn btn-blue" onclick="switchView('view-personen')">Personen verwalten</button>
+                <button class="btn btn-green" onclick="switchView('view-reservierungen')">Neue Ausleihe</button>
+            </div>
+        </div>
+
+    
+        <div id="view-personen" class="view">
+            <h2>Personen verwalten</h2>
+            <hr class="divider">
+            
+            <div class="form-container">
+                <h3 class="section-title">Neue Person registrieren</h3>
+                <form id="person-form" class="person-form">
+                    <input type="text" name="first_name" class="form-input" placeholder="Vorname" required>
+
+                    <input type="text" name="last_name" class="form-input" placeholder="Nachname" required>
+
+                    <input type="text" name="ausweis_nr" class="form-input" placeholder="Ausweis-Nummer" required>
+                    
+                    <select name="ausweis_typ" class="form-input">
+                        <option value="Reisepass">Reisepass</option>
+                        <option value="Personalausweis">Personalausweis</option>
+                        <option value="Führerschein">Führerschein</option>
+                    </select>
+
+                    <label class="file-label">Ausweis hochladen:</label>
+                    <input type="file" name="ausweis_file" class="file-input" accept="image/*,.pdf">
+                    
+                    <button type="submit" class="btn btn-green submit-btn">Registrieren</button>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <h3 class="section-title">Registrierte Personen</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Vorname</th>
+                            <th>Nachname</th>
+                            <th>Ausweis</th>
+                        </tr>
+                    </thead>
+                    <tbody id="persons-list">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="view-verwaltung" class="view">
+            <h2>Ski-Verwaltung</h2>
+            <hr class="divider">
+
+            <div class="table-container">
+                <h3 class="section-title">Alle Ski</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Typ</th>
+                            <th>Modell</th>
+                            <th>Preis/Stunde</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-list"></tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <div id="view-reservierungen" class="view">
+            <h2>Reservierungen (Neue Ausleihe)</h2>
+            <hr class="divider">
+            <div class="form-container">
+                <h3 class="section-title">Ausleihe anlegen</h3>
+                <form id="rental-form" class="person-form">
+                    <label style="font-size: 14px;">Person wählen:</label>
+                    <select name="person_id" id="rental-person-select" class="form-input" required>
+                        
+                    </select>
+                    
+                    <label style="font-size: 14px; margin-top: 5px;">Ski wählen:</label>
+                    <select name="item_id" id="rental-item-select" class="form-input" required>
+                        
+                    </select>
+
+                    <label style="font-size: 14px; margin-top: 5px;">Dauer (Stunden):</label>
+                    <input type="number" name="hours" class="form-input" min="1" value="1" required>
+
+                    <button type="submit" class="btn btn-green submit-btn">Ausleihen</button>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <h3 class="section-title">Aktive Ausleihen</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Person</th>
+                            <th>Item</th>
+                            <th>Stunden</th>
+                            <th>Aktion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="active-rentals-list"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
